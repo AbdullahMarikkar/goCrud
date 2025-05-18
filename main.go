@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/AbdullahMarikkar/goCrud/models"
 	"github.com/gin-gonic/gin"
@@ -25,7 +26,19 @@ func main() {
 }
 
 func postBlog(c *gin.Context){
-	c.JSON(200,gin.H{"message":"A New Blog Created"})
+	var newBlog models.CreateBlog
+
+	if err := c.BindJSON(&newBlog); err != nil{
+		return 
+	}
+
+	blog,err := models.CreateBlogs(newBlog)
+
+	if err != nil {
+		c.JSON(404,gin.H{"error":"Blog Couldn't Be Created","message":err})
+	}
+
+	c.JSON(200,gin.H{"data":blog})
 }
 
 func readBlogs(c *gin.Context){
@@ -40,7 +53,19 @@ func readBlogs(c *gin.Context){
 }
 
 func getBlogById(c *gin.Context){
-	c.JSON(200,gin.H{"message":"Blog of ID : "})
+	id := c.Param("id")
+	convertedId,err := strconv.Atoi(id)
+	checkErr(err)
+
+	blog,err := models.GetBlogById(convertedId)
+
+	checkErr(err)
+	
+	if blog == nil {
+		c.JSON(404,gin.H{"error":"No Blog Found By Given Id"})
+	}else{
+		c.JSON(200,gin.H{"data":blog})
+	}
 }
 
 func updateBlog(c *gin.Context){
