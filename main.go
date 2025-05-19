@@ -8,7 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
+// TODO : Move all the Routing Logic Into Router files
+// TODO : Move all the Business Logic into service files
+// TODO : Create User Service Endpoints
 
 func main() {
 	err := models.ConnectDatabase()
@@ -69,7 +71,25 @@ func getBlogById(c *gin.Context){
 }
 
 func updateBlog(c *gin.Context){
-	c.JSON(200,gin.H{"message":"Blog Updated Successfully"})
+	id := c.Param("id")
+	convertedId,err := strconv.Atoi(id)
+	checkErr(err)
+
+	blog,err := models.GetBlogById(convertedId)
+
+	checkErr(err)
+
+	if err := c.BindJSON(&blog); err != nil{
+		return 
+	}
+
+	updatedBlog,err := models.UpdateBlogById(*blog)
+
+	if err != nil {
+		c.JSON(404,gin.H{"error":"Blog Couldn't Be Updated","message":err})
+	}
+
+	c.JSON(200,gin.H{"message":"Blog Updated Successfully","data":updatedBlog})
 }
 
 func checkErr(err error){
