@@ -110,3 +110,13 @@ func GetBlogById(id int)(*Blog,error){
 	return &singleBlog,nil
 
 }
+
+func UpdateBlogById(newBlog Blog)(*Blog,error){
+	_,err := DB.Exec("UPDATE blogs SET title = ?, content = ? WHERE id = ?",newBlog.Title,newBlog.Content,newBlog.Id)
+
+	if err != nil {
+        return nil,err
+    }
+
+	return &newBlog,err
+}
