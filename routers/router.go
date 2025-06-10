@@ -14,6 +14,7 @@ func NewRouter() *gin.Engine {
 	router := gin.Default()
 
 	blogRouter := router.Group("/blogs")
+	userRouter := router.Group("/users")
 	// blogRouter.Use(middleware)
 	{
 		blogRouter.GET("/",controllers.ReadBlogs )
@@ -21,6 +22,8 @@ func NewRouter() *gin.Engine {
 		blogRouter.POST("/",controllers.PostBlog)
 		blogRouter.PUT("/:id",controllers.UpdateBlog)
 	}
-
+	{
+		userRouter.POST("/",controllers.CreateUserController)
+	}
 	return router
 }
