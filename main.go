@@ -7,7 +7,9 @@ import (
 	"github.com/AbdullahMarikkar/goCrud/routers"
 )
 
-// TODO : Create User Service Endpoints
+// TODO : Add JWT Access Token authentication and authorization, add access token in http only cookie
+// TODO : Middleware implementation for authorization
+// TODO : Refresh token mechanism with persistent table and IP Tracking
 
 func main() {
 	err := models.ConnectDatabase()
