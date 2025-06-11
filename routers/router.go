@@ -7,7 +7,7 @@ import (
 
 func Init() {
 	router := NewRouter()
-	router.Run("localhost:8080")
+	router.Run("localhost:7080")
 }
 
 func NewRouter() *gin.Engine {
@@ -24,6 +24,7 @@ func NewRouter() *gin.Engine {
 	}
 	{
 		userRouter.POST("/",controllers.CreateUserController)
+		userRouter.POST("/login",controllers.LogInUserController)
 	}
 	return router
 }
