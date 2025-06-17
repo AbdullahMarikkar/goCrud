@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/AbdullahMarikkar/goCrud/controllers"
+	"github.com/AbdullahMarikkar/goCrud/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +14,7 @@ func Init() {
 func NewRouter() *gin.Engine {
 	router := gin.Default()
 
-	blogRouter := router.Group("/blogs")
+	blogRouter := router.Group("/blogs",middleware.AuthorizeMiddleware)
 	userRouter := router.Group("/users")
 	// blogRouter.Use(middleware)
 	{

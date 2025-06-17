@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/AbdullahMarikkar/goCrud/models"
+	"github.com/AbdullahMarikkar/goCrud/services"
 	"github.com/AbdullahMarikkar/goCrud/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +35,7 @@ func LogInUserController(c *gin.Context){
 		return
 	}
 
-	user , err := models.AuthorizeUser(logInInput.Email,logInInput.Password)
+	user , err := services.AuthorizeUser(logInInput.Email,logInInput.Password)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": "Invalid Email or Password", "message": err})

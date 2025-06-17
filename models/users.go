@@ -81,7 +81,7 @@ func CreateUser(user CreateUserDto) ([]User, error) {
 	return users,nil
 }
 
-func AuthorizeUser(email string,password string)(*User,error){
+func GetUserByEmail(email string)(*User,error){
 	row, err := DB.Query("SELECT * FROM users where email = ?",email)
 
 	if err != nil {
@@ -90,19 +90,15 @@ func AuthorizeUser(email string,password string)(*User,error){
 	}
 
 	defer row.Close()
-
+	
 	var singleUser User
+	
 	for row.Next(){
 		err = row.Scan(&singleUser.Id,&singleUser.Email,&singleUser.Name,&singleUser.Password,&singleUser.Role,&singleUser.Created_At)
 		if err != nil{
 			return nil,err
 		}
 		break
-	}
-
-	if(!utils.VerifyPassword(password,singleUser.Password)){
-		fmt.Println("Error in AuthorizeUser, Password is Incorrect",err)
-		return nil,err
 	}
 
 	if err != nil{
