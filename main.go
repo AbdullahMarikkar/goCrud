@@ -7,10 +7,10 @@ import (
 	"github.com/AbdullahMarikkar/goCrud/routers"
 )
 
-// TODO : Add JWT Access Token authentication and authorization, add access token in http only cookie
-// TODO : Middleware implementation for authorization
 // TODO : Refresh token mechanism with persistent table and IP Tracking
-
+// TODO : In Refresh Token Mechanism, orchestrate validation of refresh token by IP, expiry and blacklist(and creation of new RT and AT )
+// TODO : delete old RT and add it to Blacklist after Creation of new RT
+// TODO : If RT expired send unauthorized error and request for login
 func main() {
 	err := models.ConnectDatabase()
 	checkErr(err)
